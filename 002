@@ -1,0 +1,60 @@
+/*
+[编程题] C2计算点是否在三角形之内
+Time Limit: 1000 MS Memory Limit: 32768 K
+假设现有100*100的平面，平面上有三个点组成三角形，现有另外的一个点。请判断该点是否在三角形内部
+
+输入格式：共2行数据，第一行是以空格为分隔符的数组，共6个元素，分别表示三个点的坐标。第二行是
+以空格为分隔符的数组，共2个元素，表示另外点的坐标
+
+输出格式：共1行数据，如果在三角形内部（含边线）输出1，反之输出0
+
+样例(1)：
+输入：
+23 27 94 57 64 58 
+31 12
+输出
+0
+
+样例(2)：
+输入：
+10 13 84 7 55 29 
+54 15
+输出
+1
+*/
+
+
+
+#include <iostream>
+using namespace std;
+bool SameSide( int x, int y, int xx, int yy, int x1, int y1, int x2, int y2) {
+    int dx21 = x2 - x1;
+	int dy21 = y2 - y1;
+    int dx = x - x1;
+	int dy = y - y1;
+    int dxx = xx - x1;
+	int dyy = yy - y1;
+    int thirdside = dxx*dy21 - dyy*dx21;
+	int otherside = dx*dy21 - dy*dx21;
+    
+	if (thirdside == 0) cout<<"not triangle";
+	
+	bool judge = ((otherside >= 0) == (thirdside > 0));
+    
+    return judge;
+}
+
+int main() {
+    int x1, y1, x2, y2, x3, y3, x, y;
+    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+    //cout<<endl;
+    cin >> x >> y;
+    //cout<<endl;
+	
+	int result = SameSide(x, y, x3, y3, x1, y1, x2, y2) && SameSide(x, y, x2, y2, x1, y1, x3, y3) &&
+                 SameSide(x, y, x1, y1, x2, y2, x3, y3);
+				 
+	cout << result << endl;
+    
+    return 0;
+}
